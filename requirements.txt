@@ -1,0 +1,7 @@
+warcio
+boto3
+beautifulsoup4
+tldextract
+lxml
+re
+csv
