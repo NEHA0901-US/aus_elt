@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: dim_companies
+    description: "Dimension table combining ABR entity details and commoncrawl presence"
+    columns:
+      - name: abn
+        description: "ABN number"
+        tests:
+          - not_null
+      - name: entity_name
+        description: "Business name from ABR"
+        tests:
+          - not_null
+      - name: url
+        description: "Matched URL from commoncrawl"
+        tests:
+          - not_null
+
+  - name: fact_company_presence
+    description: "Fact table tracking matched companies and web presence"
+    columns:
+      - name: abn
+        description: "ABN from ABR source"
+        tests:
+          - not_null
+      - name: url
+        description: "Web URL from commoncrawl"
+        tests:
+          - not_null
+      - name: industry
+        description: "Industry classification"
+        tests: []

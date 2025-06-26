@@ -1,0 +1,11 @@
+# dbt/models/raw/schema.yml
+
+version: 2
+
+sources:
+  - name: core_db
+    database: aus_comp_db
+    schema: core_db
+    tables:
+      - name: commoncrawl_companies
+      - name: abr_entities

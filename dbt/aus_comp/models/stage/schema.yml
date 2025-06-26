@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: stg_commoncrawl_companies
+    description: "Cleaned and validated staging data for commoncrawl companies"
+    columns:
+      - name: auto_id
+        description: "Surrogate key"
+        tests:
+          - not_null
+      - name: url
+        description: "Validated company URL"
+        tests:
+          - not_null
+      - name: company_name
+        description: "Cleaned company name"
+        tests:
+          - not_null
+      - name: industry
+        description: "Cleaned industry field"
+        tests: []
+      - name: url_normalized
+        description: "Normalized version of URL"
+        tests:
+          - not_null
+      - name: company_name_normalized
+        description: "Normalized version of company name"
+        tests:
+          - not_null
+
+  - name: stg_abr_entities
+    description: "Validated ABR entities with normalized business attributes"
+    columns:
+      - name: auto_id
+        description: "Surrogate key"
+        tests:
+          - not_null
+      - name: abn
+        description: "Australian Business Number - primary key"
+        tests:
+          - not_null
+          - unique
+      - name: entity_name
+        description: "Normalized business name"
+        tests:
+          - not_null
+      - name: entity_type
+        description: "Enum validated entity type"
+        tests: []
+      - name: entity_status
+        description: "Enum filtered status (ACT, CAN)"
+        tests:
+          - accepted_values:
+              values: ['ACT', 'CAN']
+      - name: entity_postcode
+        description: "Validated 4-digit postcode"
+        tests:
+          - not_null
+      - name: entity_start_date
+        description: "Start date of business (cannot be in future)"
+        tests: []
+      - name: needs_verification
+        description: "True if entity_type not in known enums"
+        tests: []

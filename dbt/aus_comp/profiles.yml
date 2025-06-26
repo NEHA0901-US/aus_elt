@@ -1,0 +1,12 @@
+aus_comp:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: postgres
+      password: StrongPass123!
+      port: 5432
+      dbname: aus_comp_db
+      schema: core_db
+      threads: 4
