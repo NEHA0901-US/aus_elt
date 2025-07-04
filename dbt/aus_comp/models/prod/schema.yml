@@ -31,3 +31,17 @@ models:
       - name: industry
         description: "Industry classification"
         tests: []
+
+  - name: dim_companies_likely
+    description: "Dimension table using fuzzy matching between ABR and CommonCrawl"
+    columns:
+      - name: abn
+        description: "ABN number from ABR"
+      - name: entity_name
+        description: "Entity name from ABR"
+      - name: company_name
+        description: "Company name from CommonCrawl"
+      - name: url
+        description: "Matched URL"
+      - name: name_distance
+        description: "Levenshtein distance between entity and company names"
