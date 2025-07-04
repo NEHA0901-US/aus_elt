@@ -1,7 +1,8 @@
 from pyspark.sql import SparkSession
 
 from container.steps.upsert import write_raw_to_postgres
-from container.steps.ingest import fetch_commoncrawl_wat_records_spark, parse_abr_xml
+from container.steps.ingest import parse_abr_xml
+from container.steps.ingest_commoncrawl import optimize_commoncrawl_parallel_fetch
 
 # constants
 COMMON_CRAWL_INDEX = "CC-MAIN-2025-21"
@@ -24,14 +25,17 @@ def execute():
         .getOrCreate()
 
     # Step 2: Ingest data from Common Crawl
-    common_crawl_data = fetch_commoncrawl_wat_records_spark(index=COMMON_CRAWL_INDEX, limit=200, spark=spark)
-    write_raw_to_postgres(common_crawl_data, table_name=COMMON_CRAWL_TABLE_RAW)
+
+    # Ideal method
+    # common_crawl_data = call_optimize_commoncrawl_parallel_fetch(limit=200000, spark=spark)
+    # write_raw_to_postgres(common_crawl_data, table_name=COMMON_CRAWL_TABLE_RAW)
+
+    # working solution
+    optimize_commoncrawl_parallel_fetch(limit=200000, spark=spark)
 
     # Step 3: Ingest data from ABR
     url = ABR_DATA_EXTRACT_API
     abr_data = parse_abr_xml(url, spark)
-
-    # write_to_postgres()
     write_raw_to_postgres(abr_data, table_name="abr_entities")
 
     # Step 4: Stop the SparkSession

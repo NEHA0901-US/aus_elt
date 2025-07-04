@@ -16,10 +16,11 @@ def main(args: {}):
     """
         Delegates the control of the program to respected pipeline.
     """
-    if args.trigger == "aus_comp":
+    if args.get("trigger", None) == "aus_comp":
         aus_comp_ingestion()
 
 
 if __name__ == "__main__":
     "Initiates the program"
+    print("Ingestion Process started for aus_comp")
     main(args)
